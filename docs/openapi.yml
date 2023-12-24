@@ -1,0 +1,36 @@
+openapi: 3.0.0
+info:
+  title: SmartGym API
+  description: API documentation for the SmartGym application
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: Ping
+    description: Ping the API
+
+paths:
+  /api/v1/ping:
+    get:
+      summary: Ping the API
+      description: Ping the API to check if it is running
+      tags:
+        - Ping
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+              example:
+                message: Pong!
+
+components:
+  schemas:
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
