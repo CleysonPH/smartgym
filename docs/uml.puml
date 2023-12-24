@@ -1,0 +1,90 @@
+@startuml SmartGym
+
+Exercise -- MuscleGroup
+User -- Role
+
+WorkoutSheet -- User
+WorkoutSheet -- WorkoutSheetStatus
+
+Workout -- Exercise
+Workout -- WorkoutSheet
+
+enum MuscleGroup {
+    DELTOIDS
+    BICEPS
+    OBLIQUES
+    QUADRICEPS
+    CHEST
+    FOREARM
+    ABS
+    ANKLE_FLEXORS
+    TRAPEZIUS
+    MIDDLE_BACK
+    LOWER_BACK
+    TRICEPS
+    BACK_OF_FOREARM
+    GLUTES
+    HAMSTRINGS
+    ANKLE_EXTENSORS
+}
+
+class Exercise {
+    id: UUID
+    name: String
+    description: String
+    muscleGroup: MuscleGroup
+    instructions: String
+    image: String
+    video: String
+}
+
+enum Role {
+    ADMIN
+    INSTUCTOR
+    CLIENT
+}
+
+class User {
+    id: UUID
+    name: String
+    email: String
+    password: String
+    role: Role
+    cpf: String
+    birthDate: Date
+    phone: String
+    weight: Double
+    height: Double
+    observations: String
+    confef: String
+    image: String
+    isActive: Boolean
+}
+
+class WorkoutSheet {
+    id: UUID
+    name: String
+    startDate: Date
+    endDate: Date
+    instructor: User
+    client: User
+    status: WorkoutSheetStatus
+}
+
+enum WorkoutSheetStatus {
+    ACTIVE
+    FINISHED    
+}
+
+class Workout {
+    id: UUID
+    load: Double
+    repetitions: Integer
+    series: Integer
+    rest: Integer
+    observations: String
+    exercise: Exercise
+    workoutSheet: WorkoutSheet
+}
+
+@enduml
