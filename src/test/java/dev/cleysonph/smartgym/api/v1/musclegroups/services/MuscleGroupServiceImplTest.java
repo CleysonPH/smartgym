@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import dev.cleysonph.smartgym.api.v1.musclegroups.dtos.MuscleGroupResponse;
 import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 
-public class MuscleGroupServiceImplTest {
+class MuscleGroupServiceImplTest {
 
     private MuscleGroupServiceImpl muscleGroupService;
 

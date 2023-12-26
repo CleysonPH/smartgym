@@ -16,7 +16,7 @@ import dev.cleysonph.smartgym.api.v1.musclegroups.dtos.MuscleGroupResponse;
 import dev.cleysonph.smartgym.api.v1.musclegroups.services.MuscleGroupService;
 
 @WebMvcTest(MuscleGroupRestController.class)
-public class MuscleGroupRestControllerTest {
+class MuscleGroupRestControllerTest {
 
     @MockBean
     private MuscleGroupService muscleGroupService;
