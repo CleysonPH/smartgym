@@ -34,3 +34,7 @@ build/
 .vscode
 
 http
+
+application-dev.properties
+application-ref.properties
+docker-compose.yml
