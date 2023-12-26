@@ -21,7 +21,7 @@ import dev.cleysonph.smartgym.core.models.Exercise;
 import dev.cleysonph.smartgym.core.repositories.ExerciseRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class ExerciseServiceImplTest {
+class ExerciseServiceImplTest {
 
     @Mock
     private ExerciseRepository exerciseRepository;

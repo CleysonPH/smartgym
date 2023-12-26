@@ -13,7 +13,7 @@ import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 import dev.cleysonph.smartgym.core.models.Exercise;
 
 @SpringBootTest
-public class ModelMapperExerciseMapperTest {
+class ModelMapperExerciseMapperTest {
 
     @Autowired
     private ModelMapperExerciseMapper modelMapperExerciseMapper;
