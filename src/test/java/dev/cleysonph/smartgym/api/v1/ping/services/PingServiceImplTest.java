@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import dev.cleysonph.smartgym.api.v1.common.dtos.MessageResponse;
 
-public class PingServiceImplTest {
+class PingServiceImplTest {
 
     private PingServiceImpl pingService;
 

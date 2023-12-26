@@ -15,7 +15,7 @@ import dev.cleysonph.smartgym.api.v1.common.dtos.MessageResponse;
 import dev.cleysonph.smartgym.api.v1.ping.services.PingService;
 
 @WebMvcTest(PingRestController.class)
-public class PingRestControllerTest {
+class PingRestControllerTest {
 
     @MockBean
     private PingService pingService;
