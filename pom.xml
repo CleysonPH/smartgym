@@ -18,6 +18,7 @@
 		<jacoco.version>0.8.11</jacoco.version>
 		<sonar.organization>cleysonph</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<modelmapper.version>3.0.0</modelmapper.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -59,6 +60,11 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${modelmapper.version}</version>
 		</dependency>
 	</dependencies>
 
