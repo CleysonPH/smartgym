@@ -1,5 +1,8 @@
 # SmartGym
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=CleysonPH_smartgym&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=CleysonPH_smartgym)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=CleysonPH_smartgym&metric=coverage)](https://sonarcloud.io/summary/new_code?id=CleysonPH_smartgym)
+
 Aplicação desenvolvida para propositos de estudo, tem o objetivo de gerenciar as fichas de treino de uma academia no estilo SmartFit.
 
 ## UML
@@ -12,7 +15,7 @@ O sistema possui três atores principais: Aluno, Professor e Administrador.
 
 ### Anônimo
 
-- [ ] O sistema deve permitir a listagem de todos os grupos musculares
+- [x] O sistema deve permitir a listagem de todos os grupos musculares
 - [ ] O sistema deve permitir a listagem de todos os exercícios
 - [ ] O sistema deve permitir ver as informações de um exercício
 
