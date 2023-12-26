@@ -10,6 +10,9 @@ tags:
   - name: Ping
     description: Ping the API
 
+  - name: Muscle Groups
+    description: Muscle groups
+
 paths:
   /api/v1/ping:
     get:
@@ -27,6 +30,39 @@ paths:
               example:
                 message: Pong!
 
+  /api/v1/muscle-groups:
+    get:
+      summary: Get all muscle groups
+      description: Get all muscle groups
+      tags:
+        - Muscle Groups
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MuscleGroupResponse"
+              example:
+                - name: DELTOIDS
+                - name: BICEPS
+                - name: OBLIQUES
+                - name: QUADRICEPS
+                - name: CHEST
+                - name: FOREARM
+                - name: ABS
+                - name: ANKLE_FLEXORS
+                - name: TRAPEZIUS
+                - name: MIDDLE_BACK
+                - name: LOWER_BACK
+                - name: TRICEPS
+                - name: BACK_OF_FOREARM
+                - name: GLUTES
+                - name: HAMSTRINGS
+                - name: ANKLE_EXTENSORS
+
 components:
   schemas:
     MessageResponse:
@@ -34,3 +70,26 @@ components:
       properties:
         message:
           type: string
+    MuscleGroupResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          format: enum
+          enum:
+            - DELTOIDS
+            - BICEPS
+            - OBLIQUES
+            - QUADRICEPS
+            - CHEST
+            - FOREARM
+            - ABS
+            - ANKLE_FLEXORS
+            - TRAPEZIUS
+            - MIDDLE_BACK
+            - LOWER_BACK
+            - TRICEPS
+            - BACK_OF_FOREARM
+            - GLUTES
+            - HAMSTRINGS
+            - ANKLE_EXTENSORS
