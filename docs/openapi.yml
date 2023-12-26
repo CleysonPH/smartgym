@@ -13,6 +13,9 @@ tags:
   - name: Muscle Groups
     description: Muscle groups
 
+  - name: Exercises
+    description: Exercises
+
 paths:
   /api/v1/ping:
     get:
@@ -63,33 +66,86 @@ paths:
                 - name: HAMSTRINGS
                 - name: ANKLE_EXTENSORS
 
+  /api/v1/exercises:
+    get:
+      summary: Get all exercises
+      description: Get all exercises
+      tags:
+        - Exercises
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExerciseResponse"
+              example:
+                - id: "123e4567-e89b-12d3-a456-426614174000"
+                  name: Barbell Bench Press
+                  description: The barbell bench press is a classic exercise popular among all weight lifting circles. From bodybuilders to powerlifters, the bench press is a staple chest exercise in nearly every workout program.
+                  muscle_group: CHEST
+                  instructions:
+                    - Lie down on a flat bench with a barbell in your hands, arms extended, over your chest.
+                    - Lower the barbell to your chest, pause, and then press it back up to the starting position.
+                  image_url: https://example.com/barbell-bench-press.png
+                  video_url: https://example.com/barbell-bench-press.mp4
+
 components:
   schemas:
+    MuscleGroup:
+      type: string
+      format: enum
+      enum:
+        - DELTOIDS
+        - BICEPS
+        - OBLIQUES
+        - QUADRICEPS
+        - CHEST
+        - FOREARM
+        - ABS
+        - ANKLE_FLEXORS
+        - TRAPEZIUS
+        - MIDDLE_BACK
+        - LOWER_BACK
+        - TRICEPS
+        - BACK_OF_FOREARM
+        - GLUTES
+        - HAMSTRINGS
+        - ANKLE_EXTENSORS
+
     MessageResponse:
       type: object
       properties:
         message:
           type: string
+
     MuscleGroupResponse:
       type: object
       properties:
         name:
+          $ref: "#/components/schemas/MuscleGroup"
+
+    ExerciseResponse:
+      type: object
+      properties:
+        id:
           type: string
-          format: enum
-          enum:
-            - DELTOIDS
-            - BICEPS
-            - OBLIQUES
-            - QUADRICEPS
-            - CHEST
-            - FOREARM
-            - ABS
-            - ANKLE_FLEXORS
-            - TRAPEZIUS
-            - MIDDLE_BACK
-            - LOWER_BACK
-            - TRICEPS
-            - BACK_OF_FOREARM
-            - GLUTES
-            - HAMSTRINGS
-            - ANKLE_EXTENSORS
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        muscle_group:
+          $ref: "#/components/schemas/MuscleGroup"
+        instructions:
+          type: array
+          items:
+            type: string
+        image_url:
+          type: string
+          format: uri
+        video_url:
+          type: string
+          format: uri
