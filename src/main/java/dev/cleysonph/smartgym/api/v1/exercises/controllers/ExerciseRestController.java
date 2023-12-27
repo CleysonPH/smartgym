@@ -1,8 +1,10 @@
 package dev.cleysonph.smartgym.api.v1.exercises.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,11 @@ public class ExerciseRestController {
     @GetMapping
     public List<ExerciseResponse> findAll() {
         return exerciseService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ExerciseResponse findById(@PathVariable UUID id) {
+        return exerciseService.findById(id);
     }
     
 }

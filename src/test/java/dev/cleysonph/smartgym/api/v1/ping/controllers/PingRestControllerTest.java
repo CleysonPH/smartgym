@@ -13,12 +13,16 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.common.dtos.MessageResponse;
 import dev.cleysonph.smartgym.api.v1.ping.services.PingService;
+import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
 @WebMvcTest(PingRestController.class)
 class PingRestControllerTest {
 
     @MockBean
     private PingService pingService;
+
+    @MockBean
+    private DateTimeService dateTimeService;
 
     @Autowired
     private MockMvc mockMvc;

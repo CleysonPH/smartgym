@@ -92,8 +92,58 @@ paths:
                   image_url: https://example.com/barbell-bench-press.png
                   video_url: https://example.com/barbell-bench-press.mp4
 
+  /api/v1/exercises/{id}:
+    get:
+      summary: Get an exercise by ID
+      description: Get an exercise by ID
+      tags:
+        - Exercises
+      parameters:
+        - name: id
+          in: path
+          description: Exercise ID
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExerciseResponse"
+              example:
+                id: "123e4567-e89b-12d3-a456-426614174000"
+                name: Barbell Bench Press
+                description: The barbell bench press is a classic exercise popular among all weight lifting circles. From bodybuilders to powerlifters, the bench press is a staple chest exercise in nearly every workout program.
+                muscle_group: CHEST
+                instructions:
+                  - Lie down on a flat bench with a barbell in your hands, arms extended, over your chest.
+                  - Lower the barbell to your chest, pause, and then press it back up to the starting position.
+                image_url: https://example.com/barbell-bench-press.png
+                video_url: https://example.com/barbell-bench-press.mp4
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                message: Exercise not found
+                timestamp: "2021-01-01T00:00:00Z"
+
 components:
   schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
     MuscleGroup:
       type: string
       format: enum
