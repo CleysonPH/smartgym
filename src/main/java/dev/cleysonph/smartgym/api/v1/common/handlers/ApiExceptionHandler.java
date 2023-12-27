@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import dev.cleysonph.smartgym.api.v1.common.dtos.ErrorResponse;
 import dev.cleysonph.smartgym.core.exceptions.ModelNotFoundException;
-import dev.cleysonph.smartgym.core.service.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 import lombok.RequiredArgsConstructor;
 
 @RestControllerAdvice

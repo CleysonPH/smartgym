@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import dev.cleysonph.smartgym.api.v1.exercises.dtos.ExerciseResponse;
 import dev.cleysonph.smartgym.api.v1.exercises.services.ExerciseService;
 import dev.cleysonph.smartgym.core.exceptions.ExerciseNotFoundException;
-import dev.cleysonph.smartgym.core.service.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
 @WebMvcTest(ExerciseRestController.class)
 class ExerciseRestControllerTest {

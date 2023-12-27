@@ -1,4 +1,4 @@
-package dev.cleysonph.smartgym.core.service.datetime;
+package dev.cleysonph.smartgym.core.services.datetime;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;

@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.musclegroups.dtos.MuscleGroupResponse;
 import dev.cleysonph.smartgym.api.v1.musclegroups.services.MuscleGroupService;
-import dev.cleysonph.smartgym.core.service.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
 @WebMvcTest(MuscleGroupRestController.class)
 class MuscleGroupRestControllerTest {
