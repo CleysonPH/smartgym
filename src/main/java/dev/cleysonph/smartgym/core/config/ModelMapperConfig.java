@@ -1,4 +1,4 @@
-package dev.cleysonph.smartgym.core.config.mappers;
+package dev.cleysonph.smartgym.core.config;
 
 import java.util.List;
 
