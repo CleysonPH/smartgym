@@ -60,8 +60,8 @@ class ExerciseServiceImplTest {
         
         verify(exerciseRepository, times(1)).findAll();
         verify(exerciseMapper, times(1)).toExerciseResponse(exercise);
-        assertEquals(exercises.size(), 1);
-        assertEquals(exercises.get(0), exerciseResponse);
+        assertEquals(1, exercises.size());
+        assertEquals(exerciseResponse, exercises.get(0));
     }
 
     @Test
