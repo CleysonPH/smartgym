@@ -1,0 +1,9 @@
+spring.datasource.url=<jbdc url>
+spring.datasource.username=<database username>
+spring.datasource.password=<database password>
+
+spring.flyway.enabled=true
+
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
