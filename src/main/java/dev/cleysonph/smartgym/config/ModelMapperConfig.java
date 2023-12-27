@@ -1,4 +1,4 @@
-package dev.cleysonph.smartgym.core.config;
+package dev.cleysonph.smartgym.config;
 
 import java.util.List;
 
