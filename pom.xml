@@ -106,7 +106,7 @@
 						<exclude>**/dtos/**</exclude>
 						<exclude>**/SmartgymApplication.class</exclude>
 						<exclude>**/models/**</exclude>
-						<exclude>**/config/**</exclude>
+						<exclude>**/config/mappers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
