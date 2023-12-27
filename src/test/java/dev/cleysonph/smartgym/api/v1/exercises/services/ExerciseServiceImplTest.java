@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -73,6 +74,52 @@ class ExerciseServiceImplTest {
         verify(exerciseRepository, times(1)).findAll();
         verify(exerciseMapper, times(0)).toExerciseResponse(null);
         assertEquals(0, exercises.size());
+    }
+
+    @Test
+    void whenFindById_thenReturnExerciseResponse() {
+        var exercise = Exercise.builder()
+            .id(UUID.randomUUID())
+            .name("Exercise 1")
+            .instructions("Instruction 1;Instruction 2")
+            .muscleGroup(MuscleGroup.CHEST)
+            .description("Description 1")
+            .imageUrl("https://example.com/image.jpg")
+            .videoUrl("https://example.com/video.mp4")
+            .build();
+        var exerciseResponse = ExerciseResponse.builder()
+            .id(exercise.getId().toString())
+            .name(exercise.getName())
+            .instructions(List.of("Instruction 1", "Instruction 2"))
+            .muscleGroup(exercise.getMuscleGroup().toString())
+            .description(exercise.getDescription())
+            .imageUrl(exercise.getImageUrl())
+            .videoUrl(exercise.getVideoUrl())
+            .build();
+
+        when(exerciseRepository.findById(exercise.getId())).thenReturn(Optional.of(exercise));
+        when(exerciseMapper.toExerciseResponse(exercise)).thenReturn(exerciseResponse);
+
+        var exerciseFound = exerciseService.findById(exercise.getId());
+        
+        verify(exerciseRepository, times(1)).findById(exercise.getId());
+        verify(exerciseMapper, times(1)).toExerciseResponse(exercise);
+        assertEquals(exerciseResponse, exerciseFound);
+    }
+
+    @Test
+    void whenFindById_thenThrowExerciseNotFoundException() {
+        var exerciseId = UUID.randomUUID();
+
+        when(exerciseRepository.findById(exerciseId)).thenReturn(Optional.empty());
+
+        try {
+            exerciseService.findById(exerciseId);
+        } catch (Exception e) {
+            assertEquals("Exercise not found", e.getMessage());
+        }
+        
+        verify(exerciseRepository, times(1)).findById(exerciseId);
     }
     
 }
