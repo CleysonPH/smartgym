@@ -72,7 +72,7 @@ class ExerciseServiceImplTest {
         
         verify(exerciseRepository, times(1)).findAll();
         verify(exerciseMapper, times(0)).toExerciseResponse(null);
-        assertEquals(exercises.size(), 0);
+        assertEquals(0, exercises.size());
     }
     
 }
