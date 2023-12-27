@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DateTimeServiceImplTest {
+class DateTimeServiceImplTest {
 
     private DateTimeServiceImpl dateTimeServiceImpl;
 
