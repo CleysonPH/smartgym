@@ -18,6 +18,7 @@
 		<jacoco.version>0.8.11</jacoco.version>
 		<sonar.organization>cleysonph</sonar.organization>
   		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.coverage.exclusions>**/dtos/**,**/SmartgymApplication.*,**/models/**,**/config/**</sonar.coverage.exclusions>
 		<modelmapper.version>3.0.0</modelmapper.version>
 	</properties>
 	<dependencies>
@@ -125,6 +126,7 @@
 						<configuration>
 							<formats>
 							  <format>XML</format>
+							  <format>HTML</format>
 							</formats>
 						</configuration>
 					</execution>
