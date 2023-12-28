@@ -3,6 +3,9 @@ package dev.cleysonph.smartgym.core.models;
 import java.util.Set;
 import java.util.UUID;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -33,6 +36,7 @@ public class Exercise {
     @Id
     @ToString.Include
     @EqualsAndHashCode.Include
+    @JdbcTypeCode(SqlTypes.VARCHAR)
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
