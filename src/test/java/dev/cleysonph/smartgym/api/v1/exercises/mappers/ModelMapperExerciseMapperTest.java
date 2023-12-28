@@ -3,6 +3,7 @@ package dev.cleysonph.smartgym.api.v1.exercises.mappers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class ModelMapperExerciseMapperTest {
             .instructions("Instructions 1;Instructions 2;Instructions 3")
             .imageUrl("https://example.com/image.jpg")
             .videoUrl("https://example.com/video.mp4")
-            .muscleGroup(MuscleGroup.CHEST)
+            .muscleGroups(Set.of(MuscleGroup.CHEST))
             .build();
         var instructions = exercise.getInstructions().split(";");
         
@@ -36,7 +37,10 @@ class ModelMapperExerciseMapperTest {
         assertEquals(exercise.getId().toString(), exerciseResponse.getId());
         assertEquals(exercise.getName(), exerciseResponse.getName());
         assertEquals(exercise.getDescription(), exerciseResponse.getDescription());
-        assertEquals(exercise.getMuscleGroup().toString(), exerciseResponse.getMuscleGroup());
+        assertEquals(exercise.getMuscleGroups().size(), exerciseResponse.getMuscleGroups().size());
+        for (var muscleGroup : exercise.getMuscleGroups()) {
+            assertTrue(exerciseResponse.getMuscleGroups().contains(muscleGroup));
+        }
         assertEquals(instructions.length, exerciseResponse.getInstructions().size());
         for (var instruction : instructions) {
             assertTrue(exerciseResponse.getInstructions().contains(instruction));

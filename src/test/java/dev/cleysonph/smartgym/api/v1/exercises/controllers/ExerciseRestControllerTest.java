@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.exercises.dtos.ExerciseResponse;
 import dev.cleysonph.smartgym.api.v1.exercises.services.ExerciseService;
+import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 import dev.cleysonph.smartgym.core.exceptions.ExerciseNotFoundException;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
@@ -41,7 +43,7 @@ class ExerciseRestControllerTest {
             .name("Exercise 1")
             .instructions(List.of("Instruction 1", "Instruction 2"))
             .description("Description 1")
-            .muscleGroup("CHEST")
+            .muscleGroups(Set.of(MuscleGroup.CHEST))
             .imageUrl("https://example.com/image.jpg")
             .videoUrl("https://example.com/video.mp4")
             .build();
@@ -62,7 +64,10 @@ class ExerciseRestControllerTest {
             .andExpect(jsonPath("$[0].instructions[0]").value(exerciseResponse.getInstructions().get(0)))
             .andExpect(jsonPath("$[0].instructions[1]").value(exerciseResponse.getInstructions().get(1)))
             .andExpect(jsonPath("$[0].description").value(exerciseResponse.getDescription()))
-            .andExpect(jsonPath("$[0].muscle_group").value(exerciseResponse.getMuscleGroup()))
+            .andExpect(jsonPath("$[0].muscle_groups").isArray())
+            .andExpect(jsonPath("$[0].muscle_groups").isNotEmpty())
+            .andExpect(jsonPath("$[0].muscle_groups.length()").value(exerciseResponse.getMuscleGroups().size()))
+            .andExpect(jsonPath("$[0].muscle_groups[0]").value(exerciseResponse.getMuscleGroups().toArray()[0].toString()))
             .andExpect(jsonPath("$[0].image_url").value(exerciseResponse.getImageUrl()))
             .andExpect(jsonPath("$[0].video_url").value(exerciseResponse.getVideoUrl()));
     }
@@ -86,7 +91,7 @@ class ExerciseRestControllerTest {
             .name("Exercise 1")
             .instructions(List.of("Instruction 1", "Instruction 2"))
             .description("Description 1")
-            .muscleGroup("CHEST")
+            .muscleGroups(Set.of(MuscleGroup.CHEST))
             .imageUrl("https://example.com/image.jpg")
             .videoUrl("https://example.com/video.mp4")
             .build();
@@ -103,7 +108,10 @@ class ExerciseRestControllerTest {
             .andExpect(jsonPath("$.instructions[0]").value(exerciseResponse.getInstructions().get(0)))
             .andExpect(jsonPath("$.instructions[1]").value(exerciseResponse.getInstructions().get(1)))
             .andExpect(jsonPath("$.description").value(exerciseResponse.getDescription()))
-            .andExpect(jsonPath("$.muscle_group").value(exerciseResponse.getMuscleGroup()))
+            .andExpect(jsonPath("$.muscle_groups").isArray())
+            .andExpect(jsonPath("$.muscle_groups").isNotEmpty())
+            .andExpect(jsonPath("$.muscle_groups.length()").value(exerciseResponse.getMuscleGroups().size()))
+            .andExpect(jsonPath("$.muscle_groups[0]").value(exerciseResponse.getMuscleGroups().toArray()[0].toString()))
             .andExpect(jsonPath("$.image_url").value(exerciseResponse.getImageUrl()))
             .andExpect(jsonPath("$.video_url").value(exerciseResponse.getVideoUrl()));
     }
