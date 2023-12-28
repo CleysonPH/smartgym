@@ -18,6 +18,7 @@ O sistema possui três atores principais: Aluno, Professor e Administrador.
 - [x] O sistema deve permitir a listagem de todos os grupos musculares
 - [x] O sistema deve permitir a listagem de todos os exercícios
 - [x] O sistema deve permitir ver as informações de um exercício
+- [ ] O sistema deve permitir o login de um usuário
 
 ### Administrador
 
