@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.cleysonph.smartgym.api.v1.common.dtos.ErrorResponse;
@@ -59,7 +58,7 @@ public class AccessTokenRequestFilter extends OncePerRequestFilter {
         }
     }
 
-    private void handleTokenException(HttpServletResponse response, TokenException e) throws JsonProcessingException, IOException {
+    private void handleTokenException(HttpServletResponse response, TokenException e) throws IOException {
         var body = ErrorResponse.builder()
             .message(e.getLocalizedMessage())
             .timestamp(dateTimeService.utcNow())

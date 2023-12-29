@@ -3,7 +3,6 @@ package dev.cleysonph.smartgym.api.v1.auth.controllers;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import java.util.Optional;
 import java.util.UUID;
