@@ -32,7 +32,7 @@ class AuthenticatedUserTest {
     void testGetAuthorities() {
         Collection<? extends GrantedAuthority> authorities = authenticatedUser.getAuthorities();
         assertEquals(1, authorities.size());
-        assertTrue(authorities.toArray()[0].toString().equals("ADMIN"));
+        assertEquals("ADMIN", authorities.toArray()[0].toString());
     }
 
     @Test

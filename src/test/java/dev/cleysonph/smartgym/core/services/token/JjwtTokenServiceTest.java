@@ -47,7 +47,7 @@ class JjwtTokenServiceTest {
         // then
         assertNotNull(token);
         assertTrue(token.length() > 0);
-        assertTrue(token.split("\\.").length == 3);
+        assertEquals(3, token.split("\\.").length);
     }
 
     @Test
@@ -60,7 +60,7 @@ class JjwtTokenServiceTest {
         // then
         assertNotNull(token);
         assertTrue(token.length() > 0);
-        assertTrue(token.split("\\.").length == 3);
+        assertEquals(3, token.split("\\.").length);
     }
 
     @Test
