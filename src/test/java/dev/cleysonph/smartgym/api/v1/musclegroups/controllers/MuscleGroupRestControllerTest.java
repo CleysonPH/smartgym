@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.musclegroups.dtos.MuscleGroupResponse;
@@ -27,6 +28,9 @@ class MuscleGroupRestControllerTest {
 
     @MockBean
     private DateTimeService dateTimeService;
+
+    @MockBean
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
     private MockMvc mockMvc;
