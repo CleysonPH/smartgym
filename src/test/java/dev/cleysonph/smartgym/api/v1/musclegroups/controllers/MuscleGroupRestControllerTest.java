@@ -17,7 +17,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import dev.cleysonph.smartgym.api.v1.musclegroups.dtos.MuscleGroupResponse;
 import dev.cleysonph.smartgym.api.v1.musclegroups.services.MuscleGroupService;
 import dev.cleysonph.smartgym.config.SecurityConfig;
+import dev.cleysonph.smartgym.core.repositories.UserRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.token.TokenService;
 
 @Import(SecurityConfig.class)
 @WebMvcTest(MuscleGroupRestController.class)
@@ -31,6 +33,11 @@ class MuscleGroupRestControllerTest {
 
     @MockBean
     private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean UserRepository userRepository;
 
     @Autowired
     private MockMvc mockMvc;

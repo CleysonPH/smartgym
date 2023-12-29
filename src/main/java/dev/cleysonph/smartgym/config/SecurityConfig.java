@@ -9,13 +9,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import dev.cleysonph.smartgym.api.v1.common.filters.AccessTokenRequestFilter;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationEntryPoint authenticationEntryPoint) throws Exception {
+    SecurityFilterChain securityFilterChain(
+        HttpSecurity http, 
+        AuthenticationEntryPoint authenticationEntryPoint,
+        AccessTokenRequestFilter accessTokenRequestFilter
+    ) throws Exception {
         return http
             .authorizeHttpRequests(customizer -> customizer
                 .anyRequest().permitAll()
@@ -29,6 +36,7 @@ public class SecurityConfig {
             .exceptionHandling(customizer -> customizer
                 .authenticationEntryPoint(authenticationEntryPoint)
             )
+            .addFilterBefore(accessTokenRequestFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
 

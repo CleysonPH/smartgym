@@ -16,7 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import dev.cleysonph.smartgym.api.v1.common.dtos.MessageResponse;
 import dev.cleysonph.smartgym.api.v1.ping.services.PingService;
 import dev.cleysonph.smartgym.config.SecurityConfig;
+import dev.cleysonph.smartgym.core.repositories.UserRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.token.TokenService;
 
 @Import(SecurityConfig.class)
 @WebMvcTest(PingRestController.class)
@@ -30,6 +32,11 @@ class PingRestControllerTest {
 
     @MockBean
     private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean UserRepository userRepository;
 
     @Autowired
     private MockMvc mockMvc;

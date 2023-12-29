@@ -1,5 +1,6 @@
 package dev.cleysonph.smartgym.api.v1.exercises.controllers;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -22,7 +23,9 @@ import dev.cleysonph.smartgym.api.v1.exercises.services.ExerciseService;
 import dev.cleysonph.smartgym.config.SecurityConfig;
 import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 import dev.cleysonph.smartgym.core.exceptions.ExerciseNotFoundException;
+import dev.cleysonph.smartgym.core.repositories.UserRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.token.TokenService;
 
 @Import(SecurityConfig.class)
 @WebMvcTest(ExerciseRestController.class)
@@ -36,6 +39,11 @@ class ExerciseRestControllerTest {
 
     @MockBean
     private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean UserRepository userRepository;
 
     @Autowired
     private MockMvc mockMvc;
