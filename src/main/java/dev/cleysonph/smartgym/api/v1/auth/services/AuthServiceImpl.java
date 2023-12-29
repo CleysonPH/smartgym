@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import dev.cleysonph.smartgym.api.v1.auth.dtos.LoginRequest;
+import dev.cleysonph.smartgym.api.v1.auth.dtos.RefreshRequest;
 import dev.cleysonph.smartgym.api.v1.auth.dtos.TokenResponse;
 import dev.cleysonph.smartgym.core.services.auth.AuthenticatedUser;
 import dev.cleysonph.smartgym.core.services.token.TokenService;
@@ -27,6 +28,18 @@ public class AuthServiceImpl implements AuthService {
         );
         var authenticateUser = (AuthenticatedUser) authentication.getPrincipal();
         var sub = authenticateUser.getUser().getId();
+        var accessToken = tokenService.generateAccessToken(sub);
+        var refreshToken = tokenService.generateRefreshToken(sub);
+        return TokenResponse.builder()
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .build();
+    }
+
+    @Override
+    public TokenResponse refresh(RefreshRequest refreshRequest) {
+        var token = refreshRequest.getRefreshToken();
+        var sub = tokenService.getSubFromRefreshToken(token);
         var accessToken = tokenService.generateAccessToken(sub);
         var refreshToken = tokenService.generateRefreshToken(sub);
         return TokenResponse.builder()

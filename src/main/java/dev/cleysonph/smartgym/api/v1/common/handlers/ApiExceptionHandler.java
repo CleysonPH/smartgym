@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy
 import dev.cleysonph.smartgym.api.v1.common.dtos.ErrorResponse;
 import dev.cleysonph.smartgym.api.v1.common.dtos.ValidationErrorResponse;
 import dev.cleysonph.smartgym.core.exceptions.ModelNotFoundException;
+import dev.cleysonph.smartgym.core.exceptions.TokenException;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +37,15 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .timestamp(dateTimeService.utcNow())
             .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TokenException.class)
+    public ResponseEntity<ErrorResponse> handleTokenException(TokenException exception) {
+        var errorResponse = ErrorResponse.builder()
+            .message(exception.getMessage())
+            .timestamp(dateTimeService.utcNow())
+            .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @Override
