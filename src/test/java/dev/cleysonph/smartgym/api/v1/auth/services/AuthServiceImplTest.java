@@ -13,6 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 import dev.cleysonph.smartgym.api.v1.auth.dtos.LoginRequest;
+import dev.cleysonph.smartgym.api.v1.auth.dtos.RefreshRequest;
 import dev.cleysonph.smartgym.core.models.User;
 import dev.cleysonph.smartgym.core.services.auth.AuthenticatedUser;
 import dev.cleysonph.smartgym.core.services.token.TokenService;
@@ -74,4 +75,28 @@ class AuthServiceImplTest {
             assertEquals("Invalid credentials", e.getMessage());
         }
     }
+
+    @Test
+    void testRefresh() {
+        // Arrange
+        var refreshRequest = new RefreshRequest("refresh_token");
+        var sub = UUID.randomUUID();
+        var accessToken = "new_access_token";
+        var refreshToken = "new_refresh_token";
+
+        when(tokenService.getSubFromRefreshToken(refreshRequest.getRefreshToken()))
+                .thenReturn(sub);
+        when(tokenService.generateAccessToken(sub))
+                .thenReturn(accessToken);
+        when(tokenService.generateRefreshToken(sub))
+                .thenReturn(refreshToken);
+
+        // Act
+        var tokenResponse = authService.refresh(refreshRequest);
+
+        // Assert
+        assertEquals(accessToken, tokenResponse.getAccessToken());
+        assertEquals(refreshToken, tokenResponse.getRefreshToken());
+    }
+
 }
