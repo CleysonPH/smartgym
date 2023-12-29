@@ -42,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
         var sub = tokenService.getSubFromRefreshToken(token);
         var accessToken = tokenService.generateAccessToken(sub);
         var refreshToken = tokenService.generateRefreshToken(sub);
+        tokenService.invalidateTokens(token);
         return TokenResponse.builder()
             .accessToken(accessToken)
             .refreshToken(refreshToken)

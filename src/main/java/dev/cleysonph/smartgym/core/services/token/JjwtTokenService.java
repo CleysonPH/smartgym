@@ -68,14 +68,21 @@ public class JjwtTokenService implements TokenService {
 
     private Claims getClaims(String token, String key) {
         try {
-            return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+            return tryGetClaims(token, key);
         } catch (JwtException e) {
             throw new TokenException(e.getLocalizedMessage());
         }
+    }
+
+    private Claims tryGetClaims(String token, String key) {
+        if (invalidatedTokenRepository.existsById(token)) {
+            throw new TokenException("Token is invalidated");
+        }
+        return Jwts.parser()
+            .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
     }
     
 }

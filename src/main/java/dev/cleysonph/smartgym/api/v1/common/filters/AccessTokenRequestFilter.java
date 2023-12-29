@@ -43,7 +43,7 @@ public class AccessTokenRequestFilter extends OncePerRequestFilter {
         try {
             tryDoFilterInternal(request);
         } catch (TokenException e) {
-            handleTokenException(response);
+            handleTokenException(response, e);
         }
         filterChain.doFilter(request, response);
     }
@@ -59,9 +59,9 @@ public class AccessTokenRequestFilter extends OncePerRequestFilter {
         }
     }
 
-    private void handleTokenException(HttpServletResponse response) throws JsonProcessingException, IOException {
+    private void handleTokenException(HttpServletResponse response, TokenException e) throws JsonProcessingException, IOException {
         var body = ErrorResponse.builder()
-            .message("Unauthorized")
+            .message(e.getLocalizedMessage())
             .timestamp(dateTimeService.utcNow())
             .build();
         var json = objectMapper.writeValueAsString(body);
