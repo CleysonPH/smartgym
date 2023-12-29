@@ -130,5 +130,24 @@ class JjwtTokenServiceTest {
 
         verify(invalidatedTokenRepository, times(1)).saveAll(List.of(invalidatedToken));
     }
+
+    @Test
+    void whenGetSubFromAccessTokenAndTokenIsInvalidated_thenThrowException() {
+        // given
+        var token = "token";
+
+        when(invalidatedTokenRepository.existsById(token)).thenReturn(true);
+
+        assertThrows(TokenException.class, () -> jjwtTokenService.getSubFromAccessToken(token));
+    }
+
+    @Test
+    void whenGetSubFromRefreshTokenAndTokenIsInvalidated_thenThrowException() {
+        var token = "token";
+
+        when(invalidatedTokenRepository.existsById(token)).thenReturn(true);
+
+        assertThrows(TokenException.class, () -> jjwtTokenService.getSubFromAccessToken(token));
+    }
     
 }

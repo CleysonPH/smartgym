@@ -3,6 +3,7 @@ package dev.cleysonph.smartgym.api.v1.auth.controllers;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -204,6 +205,21 @@ class AuthRestControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(body)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenLogoutWithInvalidAccessToken_then401IsReturned() throws Exception {
+        var access = "access_token";
+        var header = "Bearer " + access;
+        var body = new RefreshRequest("refresh_token");
+
+        when(tokenService.getSubFromAccessToken(anyString())).thenThrow(new TokenException("Invalid token"));
+
+        mockMvc.perform(post("/api/v1/auth/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body))
+                .header("Authorization", header))
+                .andExpect(status().isUnauthorized());
     }
 
 }
