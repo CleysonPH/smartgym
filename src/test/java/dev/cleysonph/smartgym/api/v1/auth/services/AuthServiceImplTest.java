@@ -2,6 +2,7 @@ package dev.cleysonph.smartgym.api.v1.auth.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.UUID;
@@ -97,6 +98,16 @@ class AuthServiceImplTest {
         // Assert
         assertEquals(accessToken, tokenResponse.getAccessToken());
         assertEquals(refreshToken, tokenResponse.getRefreshToken());
+    }
+
+    @Test
+    void whenLogoutIsCalled_thenTokenServiceInvalidateTokensIsCalled() {
+        var accessToken = "access_token";
+        var refreshRequest = new RefreshRequest("refresh_token");
+
+        authService.logout(refreshRequest, accessToken);
+
+        verify(tokenService).invalidateTokens(refreshRequest.getRefreshToken(), accessToken);
     }
 
 }

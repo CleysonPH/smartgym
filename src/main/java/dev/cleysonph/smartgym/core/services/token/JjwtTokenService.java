@@ -2,6 +2,7 @@ package dev.cleysonph.smartgym.core.services.token;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
@@ -47,12 +48,11 @@ public class JjwtTokenService implements TokenService {
     }
 
     @Override
-    public void invalidateToken(String token) {
-        var invalidatedToken = InvalidatedToken.builder()
-            .token(token)
-            .timeToLive((long) jwtConfigProperties.getRefreshExpiration())
-            .build();
-        invalidatedTokenRepository.save(invalidatedToken);
+    public void invalidateTokens(String ...tokens) {
+        var invalidatedTokens = Stream.of(tokens)
+            .map(token -> new InvalidatedToken(token, (long) jwtConfigProperties.getRefreshExpiration()))
+            .toList();
+        invalidatedTokenRepository.saveAll(invalidatedTokens);
     }
 
     private String generateToken(UUID sub, String key, Integer expiration) {

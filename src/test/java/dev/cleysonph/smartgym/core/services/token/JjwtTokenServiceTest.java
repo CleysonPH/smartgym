@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -118,16 +119,16 @@ class JjwtTokenServiceTest {
     }
 
     @Test
-    void whenInvalidateTokenIsCalled_thenInvalidatedTokenRepositorySaveIsCalled() {
+    void whenInvalidateTokensIsCalled_thenInvalidatedTokenRepositorySaveIsCalled() {
         var token = "token";
         var invalidatedToken = InvalidatedToken.builder()
             .token(token)
             .timeToLive((long) REFRESH_EXPIRATION)
             .build();
         
-        jjwtTokenService.invalidateToken(token);
+        jjwtTokenService.invalidateTokens(token);
 
-        verify(invalidatedTokenRepository, times(1)).save(invalidatedToken);
+        verify(invalidatedTokenRepository, times(1)).saveAll(List.of(invalidatedToken));
     }
     
 }
