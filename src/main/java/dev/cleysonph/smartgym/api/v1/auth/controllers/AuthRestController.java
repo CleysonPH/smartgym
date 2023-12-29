@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.cleysonph.smartgym.api.v1.auth.dtos.LoginRequest;
 import dev.cleysonph.smartgym.api.v1.auth.dtos.TokenResponse;
 import dev.cleysonph.smartgym.api.v1.auth.services.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -18,7 +19,7 @@ public class AuthRestController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+    public TokenResponse login(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
     
