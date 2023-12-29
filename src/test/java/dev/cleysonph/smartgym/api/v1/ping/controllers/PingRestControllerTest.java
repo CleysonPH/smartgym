@@ -8,13 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.common.dtos.MessageResponse;
 import dev.cleysonph.smartgym.api.v1.ping.services.PingService;
+import dev.cleysonph.smartgym.config.SecurityConfig;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
+@Import(SecurityConfig.class)
 @WebMvcTest(PingRestController.class)
 class PingRestControllerTest {
 
@@ -23,6 +27,9 @@ class PingRestControllerTest {
 
     @MockBean
     private DateTimeService dateTimeService;
+
+    @MockBean
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
     private MockMvc mockMvc;

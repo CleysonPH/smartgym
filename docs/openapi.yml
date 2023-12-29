@@ -16,6 +16,9 @@ tags:
   - name: Exercises
     description: Exercises
 
+  - name: Authentication
+    description: Authentication
+
 paths:
   /api/v1/ping:
     get:
@@ -113,6 +116,45 @@ paths:
                 message: Exercise not found
                 timestamp: "2021-01-01T00:00:00Z"
 
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      description: Login
+      tags:
+        - Authentication
+      requestBody:
+        description: Login request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+              example:
+                access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM
+                refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidationErrorResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                message: Invalid credentials
+                timestamp: "2021-01-01T00:00:00Z"
+
 components:
   schemas:
     ErrorResponse:
@@ -123,6 +165,29 @@ components:
         timestamp:
           type: string
           format: date-time
+
+    ValidationErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+      example:
+        message: Validation failed
+        timestamp: "2021-01-01T00:00:00Z"
+        errors:
+          email:
+            - Email is required
+          password:
+            - Password is required
 
     MuscleGroup:
       type: string
@@ -194,3 +259,28 @@ components:
           - Lower the barbell to your chest, pause, and then press it back up to the starting position.
         image_url: https://example.com/barbell-bench-press.png
         video_url: https://example.com/barbell-bench-press.mp4
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      example:
+        email: "jonh_due@mail.com"
+        password: "password@123"
+
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          format: jwt
+        refresh_token:
+          type: string
+          format: jwt
+      example:
+        access_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImpvaG4gZHVl
+        refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImpvaG4gZHVl

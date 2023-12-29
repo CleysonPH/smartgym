@@ -7,3 +7,8 @@ spring.flyway.enabled=true
 spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
+
+dev.cleysonph.smartgym.jwt.accessKey=<signing key for access token>
+dev.cleysonph.smartgym.jwt.refreshKey=<signing key for refresh token>
+dev.cleysonph.smartgym.jwt.accessExpiration=<expiration time in seconds for access token>
+dev.cleysonph.smartgym.jwt.refreshExpiration=<expiration time in seconds for refresh token>

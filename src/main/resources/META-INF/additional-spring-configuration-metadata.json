@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "dev.cleysonph.smartgym.jwt.accessKey",
+      "type": "java.lang.String",
+      "description": "Signature key for JWT access token"
+    },
+    {
+      "name": "dev.cleysonph.smartgym.jwt.refreshKey",
+      "type": "java.lang.String",
+      "description": "Signature key for JWT refresh token"
+    },
+    {
+      "name": "dev.cleysonph.smartgym.jwt.accessExpiration",
+      "type": "java.lang.String",
+      "description": "Expiration time in seconds for JWT access token"
+    },
+    {
+      "name": "dev.cleysonph.smartgym.jwt.refreshExpiration",
+      "type": "java.lang.String",
+      "description": "Expiration time in seconds for JWT refresh token"
+    }
+  ]
+}
