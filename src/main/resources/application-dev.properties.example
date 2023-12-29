@@ -8,6 +8,9 @@ spring.jpa.hibernate.ddl-auto=none
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 
+spring.data.redis.host=<redis host>
+spring.data.redis.port=<redis port>
+
 dev.cleysonph.smartgym.jwt.accessKey=<signing key for access token>
 dev.cleysonph.smartgym.jwt.refreshKey=<signing key for refresh token>
 dev.cleysonph.smartgym.jwt.accessExpiration=<expiration time in seconds for access token>
