@@ -1,5 +1,6 @@
 package dev.cleysonph.smartgym.core.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -29,7 +30,9 @@ import lombok.ToString;
 @Table(name = "users")
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
     @Id
     @ToString.Include
