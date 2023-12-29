@@ -47,6 +47,7 @@ class UnauthorizedHandlerTest {
     }
 
     @Test
+    @SuppressWarnings("null")
     void testCommence() throws IOException, ServletException {
         // Arrange
         var now = ZonedDateTime.now(ZoneId.of("UTC"));
