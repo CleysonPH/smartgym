@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
             .csrf(customizer -> customizer
-                .disable()
+                .ignoringRequestMatchers("/api/**")
             )
             .exceptionHandling(customizer -> customizer
                 .authenticationEntryPoint(authenticationEntryPoint)
