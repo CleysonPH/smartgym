@@ -12,15 +12,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import dev.cleysonph.smartgym.api.v1.exercises.dtos.ExerciseResponse;
 import dev.cleysonph.smartgym.api.v1.exercises.services.ExerciseService;
+import dev.cleysonph.smartgym.config.SecurityConfig;
 import dev.cleysonph.smartgym.core.enums.MuscleGroup;
 import dev.cleysonph.smartgym.core.exceptions.ExerciseNotFoundException;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
+@Import(SecurityConfig.class)
 @WebMvcTest(ExerciseRestController.class)
 class ExerciseRestControllerTest {
 
