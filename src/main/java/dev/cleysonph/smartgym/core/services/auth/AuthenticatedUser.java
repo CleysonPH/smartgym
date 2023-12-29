@@ -7,8 +7,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import dev.cleysonph.smartgym.core.models.User;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public class AuthenticatedUser implements UserDetails {
 
