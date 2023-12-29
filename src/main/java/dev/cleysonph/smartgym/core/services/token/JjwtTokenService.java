@@ -2,11 +2,14 @@ package dev.cleysonph.smartgym.core.services.token;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 
 import dev.cleysonph.smartgym.config.JwtConfigProperties;
 import dev.cleysonph.smartgym.core.exceptions.TokenException;
+import dev.cleysonph.smartgym.core.models.InvalidatedToken;
+import dev.cleysonph.smartgym.core.repositories.InvalidatedTokenRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -20,6 +23,7 @@ public class JjwtTokenService implements TokenService {
 
     private final DateTimeService dateTimeService;
     private final JwtConfigProperties jwtConfigProperties;
+    private final InvalidatedTokenRepository invalidatedTokenRepository;
 
     @Override
     public String generateAccessToken(UUID sub) {
@@ -43,6 +47,14 @@ public class JjwtTokenService implements TokenService {
         return UUID.fromString(subject);
     }
 
+    @Override
+    public void invalidateTokens(String ...tokens) {
+        var invalidatedTokens = Stream.of(tokens)
+            .map(token -> new InvalidatedToken(token, (long) jwtConfigProperties.getRefreshExpiration()))
+            .toList();
+        invalidatedTokenRepository.saveAll(invalidatedTokens);
+    }
+
     private String generateToken(UUID sub, String key, Integer expiration) {
         var issuedAt = dateTimeService.utcNow();
         var expirationAt = issuedAt.plusSeconds(expiration);
@@ -56,14 +68,21 @@ public class JjwtTokenService implements TokenService {
 
     private Claims getClaims(String token, String key) {
         try {
-            return Jwts.parser()
-                .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+            return tryGetClaims(token, key);
         } catch (JwtException e) {
             throw new TokenException(e.getLocalizedMessage());
         }
+    }
+
+    private Claims tryGetClaims(String token, String key) {
+        if (invalidatedTokenRepository.existsById(token)) {
+            throw new TokenException("Token is invalidated");
+        }
+        return Jwts.parser()
+            .verifyWith(Keys.hmacShaKeyFor(key.getBytes()))
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
     }
     
 }

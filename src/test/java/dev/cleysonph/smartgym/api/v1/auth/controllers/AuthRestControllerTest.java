@@ -1,9 +1,11 @@
 package dev.cleysonph.smartgym.api.v1.auth.controllers;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.Optional;
+import java.util.UUID;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,8 +23,12 @@ import dev.cleysonph.smartgym.api.v1.auth.dtos.RefreshRequest;
 import dev.cleysonph.smartgym.api.v1.auth.dtos.TokenResponse;
 import dev.cleysonph.smartgym.api.v1.auth.services.AuthService;
 import dev.cleysonph.smartgym.config.SecurityConfig;
+import dev.cleysonph.smartgym.core.enums.Role;
 import dev.cleysonph.smartgym.core.exceptions.TokenException;
+import dev.cleysonph.smartgym.core.models.User;
+import dev.cleysonph.smartgym.core.repositories.UserRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
+import dev.cleysonph.smartgym.core.services.token.TokenService;
 
 @Import(SecurityConfig.class)
 @WebMvcTest(AuthRestController.class)
@@ -39,6 +45,11 @@ class AuthRestControllerTest {
 
     @MockBean
     private AuthenticationEntryPoint authenticationEntryPoint;
+
+    @MockBean
+    private TokenService tokenService;
+
+    @MockBean UserRepository userRepository;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -158,6 +169,56 @@ class AuthRestControllerTest {
                 .content(objectMapper.writeValueAsString(refreshRequest)))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.message").value("Invalid token"));
+    }
+
+    @Test
+    void whenLogoutIsCalled_withValidAccessAndRefreshTokens_then205IsRetruned() throws Exception {
+        var body = new RefreshRequest("refresh_token");
+        var access = "access_token";
+        var authorization = "Bearer " + access;
+        var user = User.builder()
+            .id(UUID.randomUUID())
+            .name("Test")
+            .password("password")
+            .role(Role.ADMIN)
+            .email("test@mail.com")
+            .build();
+
+        when(tokenService.getSubFromAccessToken(anyString())).thenReturn(user.getId());
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
+
+        mockMvc.perform(post("/api/v1/auth/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body))
+                .header("Authorization", authorization))
+                .andExpect(status().isResetContent());
+
+        verify(authService).logout(body, access);
+    }
+
+    @Test
+    void whenLogoutIsCalled_withNoAccessToken_then400IsReturned() throws Exception {
+        var body = new RefreshRequest("refresh_token");
+
+        mockMvc.perform(post("/api/v1/auth/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void whenLogoutWithInvalidAccessToken_then401IsReturned() throws Exception {
+        var access = "access_token";
+        var header = "Bearer " + access;
+        var body = new RefreshRequest("refresh_token");
+
+        when(tokenService.getSubFromAccessToken(anyString())).thenThrow(new TokenException("Invalid token"));
+
+        mockMvc.perform(post("/api/v1/auth/logout")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(body))
+                .header("Authorization", header))
+                .andExpect(status().isUnauthorized());
     }
 
 }
