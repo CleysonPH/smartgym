@@ -12,12 +12,15 @@ import org.junit.jupiter.api.Test;
 
 import dev.cleysonph.smartgym.config.JwtConfigProperties;
 import dev.cleysonph.smartgym.core.exceptions.TokenException;
+import dev.cleysonph.smartgym.core.models.InvalidatedToken;
+import dev.cleysonph.smartgym.core.repositories.InvalidatedTokenRepository;
 import dev.cleysonph.smartgym.core.services.datetime.DateTimeService;
 
 class JjwtTokenServiceTest {
 
     private JjwtTokenService jjwtTokenService;
     private DateTimeService dateTimeService;
+    private InvalidatedTokenRepository invalidatedTokenRepository;
 
     private static final String ACCESS_KEY = "c3ed238a9072d0bbfd7cd1c8432dec8426b91168519a6fd2c73545f821cfb382";
     private static final String REFRESH_KEY = "846f23d576098d859941952181838d2597d730a7ca7d79a03fe46164c2c383c1";
@@ -29,8 +32,9 @@ class JjwtTokenServiceTest {
     @BeforeEach
     void setUp() {
         dateTimeService = mock(DateTimeService.class);
+        invalidatedTokenRepository = mock(InvalidatedTokenRepository.class);
         var jwtConfigProperties = new JwtConfigProperties(ACCESS_KEY, REFRESH_KEY, REFRESH_EXPIRATION, ACCESS_EXPIRATION);
-        jjwtTokenService = new JjwtTokenService(dateTimeService, jwtConfigProperties);
+        jjwtTokenService = new JjwtTokenService(dateTimeService, jwtConfigProperties, invalidatedTokenRepository);
     }
 
 
@@ -111,6 +115,19 @@ class JjwtTokenServiceTest {
 
         // when
         assertThrows(TokenException.class, () -> jjwtTokenService.getSubFromRefreshToken(token));
+    }
+
+    @Test
+    void whenInvalidateTokenIsCalled_thenInvalidatedTokenRepositorySaveIsCalled() {
+        var token = "token";
+        var invalidatedToken = InvalidatedToken.builder()
+            .token(token)
+            .timeToLive((long) REFRESH_EXPIRATION)
+            .build();
+        
+        jjwtTokenService.invalidateToken(token);
+
+        verify(invalidatedTokenRepository, times(1)).save(invalidatedToken);
     }
     
 }

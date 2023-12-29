@@ -11,5 +11,7 @@ public interface TokenService {
     String generateRefreshToken(UUID sub);
 
     UUID getSubFromRefreshToken(String token);
+
+    void invalidateToken(String token);
     
 }
