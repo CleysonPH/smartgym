@@ -19,7 +19,7 @@ O sistema possui três atores principais: Aluno, Professor e Administrador.
 - [x] O sistema deve permitir a listagem de todos os exercícios
 - [x] O sistema deve permitir ver as informações de um exercício
 - [x] O sistema deve permitir o login de um usuário
-- [ ] O sistema deve permitir o logout de um usuário
+- [x] O sistema deve permitir o logout de um usuário
 
 ### Administrador
 
