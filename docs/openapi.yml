@@ -200,6 +200,25 @@ paths:
                 message: Invalid refresh token
                 timestamp: "2021-01-01T00:00:00Z"
 
+  /api/v1/auth/logout:
+    post:
+      summary: Logout
+      description: Logout
+      tags:
+        - Authentication
+      security:
+        - bearerAuth: []
+      requestBody:
+        description: Logout request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshRequest"
+      responses:
+        "205":
+          description: Reset Content
+
 components:
   schemas:
     ErrorResponse:
@@ -343,3 +362,9 @@ components:
           format: jwt
       example:
         refresh_token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6ImpvaG4gZHVl
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
